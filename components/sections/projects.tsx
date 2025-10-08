@@ -1,130 +1,276 @@
-"use client"
+"use client";
+import React, { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
+import { Folder } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-import Image from "next/image"
-import { motion } from "framer-motion"
-import Magnetic from "@/components/site/magnetic"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
+gsap.registerPlugin(ScrollTrigger);
 
-const projects = [
-  {
-    name: "Shakaar Setu – AI-powered collaboration system",
-    img: "https://images.unsplash.com/photo-1529336953121-ad5a0d43d0d6?q=80&w=1600&auto=format&fit=crop",
-    tech: "Next.js, TypeScript, Python, ML",
-    summary: "Bringing teams together with AI-assisted workflows.",
-  },
-  {
-    name: "Beach Warrior – Tech for CSR",
-    img: "https://images.unsplash.com/photo-1516542076529-1ea3854896e1?q=80&w=1600&auto=format&fit=crop",
-    tech: "React, Flask, Postgres",
-    summary: "Community-first platform for coastal cleanup.",
-  },
-  {
-    name: "Cultura – Digital heritage experience",
-    img: "https://images.unsplash.com/photo-1460164516190-2b6df92a6549?q=80&w=1600&auto=format&fit=crop",
-    tech: "Next.js, Three.js",
-    summary: "Immersive interactive experiences for culture.",
-  },
-  {
-    name: "Nivaran – AI-driven IT helpdesk",
-    img: "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop",
-    tech: "Next.js, LLM tooling",
-    summary: "Faster resolutions with intelligent triage.",
-  },
-  {
-    name: "Sentinel UI Lab",
-    img: "https://images.unsplash.com/photo-1482192505345-5655af888cc4?q=80&w=1600&auto=format&fit=crop",
-    tech: "React, Motion, GSAP",
-    summary: "Cinematic interface explorations.",
-  },
-  {
-    name: "Atlas Data Canvas",
-    img: "https://images.unsplash.com/photo-1543286386-2e659306cd6c?q=80&w=1600&auto=format&fit=crop",
-    tech: "Next.js, D3",
-    summary: "Visual data stories on the web.",
-  },
-]
+const PortfolioSection = () => {
+  const sectionRef = useRef(null);
+  const containerRef = useRef(null);
+  const contentRef = useRef(null);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [rotation, setRotation] = useState(0);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
 
-const spans = [
-  // colSpan, rowSpan (desktop-first, responsive falls back to single)
-  { col: "md:col-span-6", row: "md:row-span-2" }, // portrait/tall
-  { col: "md:col-span-6", row: "md:row-span-1" }, // wide
-  { col: "md:col-span-4", row: "md:row-span-1" },
-  { col: "md:col-span-8", row: "md:row-span-2" }, // hero wide
-  { col: "md:col-span-5", row: "md:row-span-1" },
-  { col: "md:col-span-7", row: "md:row-span-1" },
-]
+  // Parallax transforms for background elements
+  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const y2 = useTransform(scrollYProgress, [0, 1], [150, -150]);
+  const y3 = useTransform(scrollYProgress, [0, 1], [80, -80]);
+  const y4 = useTransform(scrollYProgress, [0, 1], [120, -120]);
 
-export default function Projects() {
+  // Smooth spring animation for parallax
+  const springConfig = { stiffness: 100, damping: 30, restDelta: 0.001 };
+  const smoothY1 = useSpring(y1, springConfig);
+  const smoothY2 = useSpring(y2, springConfig);
+  const smoothY3 = useSpring(y3, springConfig);
+  const smoothY4 = useSpring(y4, springConfig);
+
+  // Handle mouse move for cursor follow effect
+  const handleMouseMove = (e) => {
+    const rect = sectionRef.current?.getBoundingClientRect();
+    if (rect) {
+      setMousePosition({
+        x: e.clientX - rect.left - rect.width / 2,
+        y: e.clientY - rect.top - rect.height / 2
+      });
+    }
+  };
+
+  // Rotating chip animation
+  useEffect(() => {
+    let animationFrame;
+    const animate = () => {
+      setRotation(prev => (prev + 0.5) % 360);
+      animationFrame = requestAnimationFrame(animate);
+    };
+    animate();
+    return () => cancelAnimationFrame(animationFrame);
+  }, []);
+
+  // GSAP infinite upward scroll for content inside the box
+  useEffect(() => {
+    if (contentRef.current && containerRef.current) {
+      const content = contentRef.current;
+      const container = containerRef.current;
+      const contentHeight = content.scrollHeight;
+      const containerHeight = container.clientHeight;
+
+      // Clone content for seamless looping
+      content.innerHTML += content.innerHTML;
+
+      let pos = 0;
+      const speed = 0.5;
+
+      const animate = () => {
+        pos -= speed;
+        if (pos <= -contentHeight) pos = 0;
+        content.style.transform = `translateY(${pos}px)`;
+        requestAnimationFrame(animate);
+      };
+
+      animate();
+    }
+  }, []);
+
+  // Projects data (duplicated for seamless loop)
+  const projects = [
+    {
+      title: "Werde Fit im\nWellnessclub\npuls Stuttgart",
+      rating: "5.0",
+      brand: "PULS",
+      bg: "bg-gradient-to-br from-rose-100 to-rose-50",
+      image: "/dummy.png",
+      description: "90-tägiger Testlauf\nKeine Kündigungsfrist\nUpgrade auch monatlich"
+    },
+    {
+      title: "FEUERSTEINCARS",
+      subtitle: "PREMIUM LUXURY CARS\nUNSER SORTIMENT IST IHR VERTRAUEN",
+      brand: "Feuerstein",
+      bg: "bg-gradient-to-br from-gray-900 to-gray-800",
+      textColor: "text-white"
+    },
+    {
+      title: "Design Project",
+      brand: "Brand 3",
+      bg: "bg-gradient-to-br from-gray-800 to-gray-700",
+      textColor: "text-white"
+    },
+    {
+      title: "ALEKSANDROV AGENCY",
+      subtitle: "IMAGES IDEA AND INFLUENCING\nNARRATIVE CONTACT",
+      brand: "Aleksandrov",
+      bg: "bg-gradient-to-br from-amber-50 to-white"
+    },
+    {
+      title: "Digital Transformation",
+      brand: "TechCorp",
+      bg: "bg-gradient-to-br from-blue-50 to-blue-100"
+    },
+    {
+      title: "E-Commerce Redesign",
+      brand: "ShopNow",
+      bg: "bg-gradient-to-br from-green-50 to-green-100"
+    },
+    {
+      title: "Mobile App UI/UX",
+      brand: "AppLabs",
+      bg: "bg-gradient-to-br from-purple-50 to-purple-100"
+    }
+  ];
+
   return (
-    <section id="projects" className="mx-auto max-w-6xl px-4 py-24 md:px-8">
-      <motion.p
-        className="mb-6 font-display text-sm uppercase tracking-[0.28em] opacity-70 text-ambient"
-        initial={{ opacity: 0, y: 10 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-      >
-        The Creations
-      </motion.p>
-
-      <div
-        className="grid auto-rows-[14rem] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-12"
-        style={{ gridAutoFlow: "dense" }}
-      >
-        {projects.map((p, i) => {
-          const span = spans[i % spans.length]
-          return (
-            <motion.div
-              key={p.name}
-              className={`group ${span.col} ${span.row}`}
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "0px 0px -40px 0px" }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
+    <section
+      ref={sectionRef}
+      className="relative min-h-[180vh] py-20 overflow-hidden bg-gray-50"
+      onMouseMove={handleMouseMove}
+    >
+      <div className="container mx-auto px-4 relative">
+        {/* Modern Thick Border Frame */}
+        <div className="max-w-7xl mx-auto bg-gray-50 rounded-[3rem] p-1 shadow-lg border-2 border-gray-200">
+          {/* Inner Content Area with Overflow Hidden */}
+          <div
+            ref={containerRef}
+            className="bg-white rounded-[2.5rem] p-8 overflow-hidden h-[70vh]"
+          >
+            {/* Infinite Scrolling Content */}
+            <div
+              ref={contentRef}
+              className="grid grid-cols-1 lg:grid-cols-2 gap-6"
             >
-              <Magnetic>
-                <Card className="relative h-full w-full overflow-hidden glass glow border-illuminate">
-                  <CardContent className="h-full p-0">
-                    <div className="relative h-full w-full">
-                      <Image
-                        src={p.img || "/placeholder.svg"}
-                        alt={p.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.06]"
-                      />
-                      {/* gradient veil for depth */}
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/65 via-transparent to-transparent" />
-                    </div>
-                    {/* overlay content */}
-                    <div className="absolute inset-x-0 bottom-0 z-10 p-4 md:p-5">
-                      <h3 className="font-display text-lg md:text-xl">{p.name}</h3>
-                      <p className="mt-1 text-sm opacity-85">{p.summary}</p>
-                      <p className="mt-1 text-xs opacity-70">{p.tech}</p>
-                      <div className="mt-3 flex gap-3">
-                        <Magnetic strength={10}>
-                          <Button size="sm" asChild>
-                            <a href="#" target="_blank" rel="noreferrer" data-cursor="hover">
-                              View Demo
-                            </a>
-                          </Button>
-                        </Magnetic>
-                        <Magnetic strength={10}>
-                          <Button size="sm" variant="secondary" asChild>
-                            <a href="#" target="_blank" rel="noreferrer" data-cursor="hover">
-                              View Code
-                            </a>
-                          </Button>
-                        </Magnetic>
+              {projects.map((project, index) => (
+                <motion.div
+                  key={`${index}-${project.title}`}
+                  style={{ y: index % 2 === 0 ? smoothY1 : index % 3 === 0 ? smoothY2 : smoothY3 }}
+                  className="relative min-h-[300px]"
+                >
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    className={`${project.bg} ${project.textColor} rounded-3xl p-6 shadow-lg h-full overflow-hidden relative group cursor-pointer`}
+                  >
+                    {project.image && (
+                      <>
+                        <div className="absolute inset-0 bg-black opacity-30 group-hover:opacity-20 transition-opacity"></div>
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      </>
+                    )}
+                    <div className="relative z-10 p-4">
+                      <div className="absolute top-4 left-4 flex items-center gap-2">
+                        <div className="flex gap-1">
+                          <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+                          <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                        </div>
+                      </div>
+                      <div className="mt-12">
+                        {project.rating && (
+                          <div className="flex items-center gap-1 mb-4">
+                            <span className="text-xl font-bold">{project.rating}</span>
+                            <div className="flex">
+                              {[...Array(5)].map((_, i) => (
+                                <span key={i} className="text-yellow-300 text-sm">★</span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                        <h3 className="text-2xl font-bold leading-tight whitespace-pre-line mb-4">
+                          {project.title}
+                        </h3>
+                        {project.subtitle && (
+                          <p className="text-xs tracking-[0.2em] uppercase mb-2">
+                            {project.subtitle}
+                          </p>
+                        )}
+                        {project.description && (
+                          <p className="text-sm mb-4">{project.description}</p>
+                        )}
+                        <motion.div
+                          className="w-10 h-10 bg-rose-800 rounded-full flex items-center justify-center"
+                          whileHover={{ scale: 1.1, rotate: 90 }}
+                        >
+                          <span className="text-white text-lg">→</span>
+                        </motion.div>
+                      </div>
+                      <div className="absolute bottom-4 right-4">
+                        <span className="text-xs font-semibold italic">{project.brand}</span>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </Magnetic>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Central Button with Rotating Chip */}
+        <motion.div className="relative flex items-center justify-center -mt-20">
+          <motion.div
+            className="relative z-20"
+            animate={{
+              x: mousePosition.x * 0.1,
+              y: mousePosition.y * 0.1
+            }}
+            transition={{ type: "spring", stiffness: 150, damping: 15 }}
+          >
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-24 h-24 bg-white rounded-full shadow-2xl flex items-center justify-center group cursor-pointer relative overflow-hidden border-2 border-gray-200"
+            >
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-br from-purple-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              />
+              <Folder className="w-8 h-8 text-gray-900 relative z-10 group-hover:text-white transition-colors" />
+            </motion.button>
+
+            {/* Rotating "See Recent Work" Chip */}
+            <motion.div
+              className="absolute top-1/2 left-1/2"
+              style={{
+                x: Math.cos(rotation * Math.PI / 180) * 120 - 80,
+                y: Math.sin(rotation * Math.PI / 180) * 120 - 20,
+              }}
+            >
+              <motion.div
+                className="bg-black text-white px-5 py-2 rounded-full shadow-xl whitespace-nowrap font-semibold text-sm"
+                animate={{ rotate: rotation }}
+                style={{ originX: 0.5, originY: 0.5 }}
+              >
+                See Recent Work
+              </motion.div>
             </motion.div>
-          )
-        })}
+          </motion.div>
+        </motion.div>
       </div>
+
+      {/* Background decorative elements */}
+      <motion.div
+        className="absolute top-1/4 left-10 w-64 h-64 bg-purple-600 rounded-full blur-3xl opacity-10"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.1, 0.15, 0.1]
+        }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 right-10 w-64 h-64 bg-blue-600 rounded-full blur-3xl opacity-10"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          opacity: [0.15, 0.1, 0.15]
+        }}
+        transition={{ duration: 8, repeat: Infinity }}
+      />
     </section>
-  )
-}
+  );
+};
+
+export default PortfolioSection;
