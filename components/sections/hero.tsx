@@ -147,7 +147,7 @@ const Hero = () => {
         {/* NavBox Toggle Button */}
         <button
           onClick={toggleNav}
-          className="fixed top-8 right-8 z-50 bg-gray-800 text-white p-3 rounded-full hover:scale transition-all"
+          className="fixed top-8 right-8 z-50 bg-gray-800 text-white p-3 rounded-full hover:scale-110 transition-all"
         >
           {isNavOpen ? <X size={16} /> : <Menu size={16} />}
         </button>

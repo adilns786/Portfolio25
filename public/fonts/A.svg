@@ -1,0 +1,11 @@
+<svg width="150" height="200" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>Layer 1</title>
+  <g id="svg_14" stroke-width="0.5" stroke="null">
+   <rect fill="#fff" x="35.12509" y="49.59118" width="7" height="172" id="svg_7" stroke-width="8" rx="5" transform="matrix(1.11679 0.22629 -0.237381 1.06461 41.6241 -53.4938)" stroke="#000"/>
+   <rect fill="#fff" x="132.8332" y="29.38951" width="7" height="172" id="svg_8" stroke-width="8" rx="5" transform="matrix(1.11679 -0.22629 0.237381 1.06461 -87.1125 7.60439)" stroke="#000"/>
+   <rect fill="#fff" x="-4.59956" y="179.58353" width="7" height="102.30986" id="svg_9" stroke-width="8" rx="5" transform="matrix(0.874623 0.699605 -0.733895 0.833758 240.631 -46.2636)" stroke="#000"/>
+  </g>
+ </g>
+
+</svg>
