@@ -1,158 +1,192 @@
 "use client";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { gsap } from "gsap";
+import { Mail, Linkedin, Instagram } from "lucide-react";
 
-import React from "react";
+export default function ContactPage() {
+  const [isHovered, setIsHovered] = useState(false);
 
-export default function ContactSection() {
+  useEffect(() => {
+    // Animate elements on load
+    gsap.fromTo(
+      ".subtitle",
+      { opacity: 0, y: -20 },
+      { opacity: 1, y: 0, duration: 0.8, delay: 0.2, ease: "power3.out" }
+    );
+
+    gsap.fromTo(
+      ".main-title",
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 1, delay: 0.4, ease: "power3.out" }
+    );
+
+    gsap.fromTo(
+      ".description",
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.8, delay: 0.6, ease: "power3.out" }
+    );
+
+    gsap.fromTo(
+      ".cta-button",
+      { opacity: 0, scale: 0.9 },
+      { opacity: 1, scale: 1, duration: 0.6, delay: 0.8, ease: "back.out(1.2)" }
+    );
+  }, []);
+
   return (
-    <div className="min-h-screen rounded-3xl m-2 bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
-      {/* Subtle gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-800/20 via-transparent to-transparent pointer-events-none"></div>
+    <div className="min-h-screen  text-white font-sans relative overflow-hidden">
+      {/* Subtle texture overlay */}
+      {/* <div 
+        className="absolute inset-0 opacity-[0.03] pointer-events-none"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      /> */}
 
-      {/* Main Content */}
-      <div className=" relative z-10 flex flex-col items-center justify-center  px-6 md:px-1 text-center">
-        {/* Subtitle */}
-        <p className="text-gray-400 text-base md:text-lg italic font-serif mb-8 md:mb-10">
-          Available to work
-        </p>
+      {/* Light glow from top-left */}
+      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-gradient-radial from-white/5 to-transparent blur-3xl pointer-events-none" />
 
-        {/* Main Heading */}
-        <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light mb-8 md:mb-10">
-          <span className="text-white">Let's </span>
-          <span className="text-gray-500">Connect</span>
-        </h1>
-
-        {/* Description */}
-        <div className="max-w-2xl mb-12 md:mb-16">
-          <p className="text-gray-300 text-base md:text-lg leading-relaxed mb-2">
-            Feel free to contact me if having any questions.
-          </p>
-          <p className="text-gray-300 text-base md:text-lg leading-relaxed">
-            I'm available for new projects or just for chatting.
-          </p>
-        </div>
-
-        {/* CTA Button */}
-        <button className="group relative overflow-hidden bg-gray-800/60 backdrop-blur-sm hover:bg-gray-700/60 text-white px-8 md:px-10 py-4 md:py-5 rounded-full border-2 border-gray-600/50 hover:border-gray-500/50 transition-all duration-300 flex items-center gap-3 shadow-2xl hover:shadow-3xl hover:scale-105">
-          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="black"
-              strokeWidth="3"
-            >
-              <circle cx="12" cy="12" r="10" />
-              <path d="M8 12h8M12 8l4 4-4 4" />
-            </svg>
-          </div>
-          <span className="text-base md:text-lg font-medium">
-            Book a Meeting
-          </span>
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            className="group-hover:translate-x-1 transition-transform"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Footer */}
-      <div className="relative z-10 px-6 md:px-12 pb-8 ">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 border-t border-gray-800 pt-8">
-          {/* Copyright and Links */}
-          <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 text-sm md:text-base">
-            <span className="text-white">© Denqid, 2025</span>
-            <span className="text-gray-600">|</span>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-300 transition-colors"
-            >
-              Legal Notice
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-300 transition-colors"
-            >
-              Privacy Policy
-            </a>
+      {/* Main container with rounded corners and padding */}
+      <div className="min-h-screen p-2.5 flex flex-col">
+        <div
+          className="flex-1 bg-gradient-to-br from-[#120D0A]/90 to-[#000000]/95 rounded-[25px] backdrop-blur-sm border border-white/5 flex flex-col relative overflow-hidden pt-20"
+        >
+          <div
+            className="absolute inset-0 pointer-events-none opacity-[0.12]"
+            style={{
+              backgroundImage: "url('/bgnoise.png')", // your noise texture file
+              backgroundRepeat: "repeat",
+              backgroundSize: "100px 100px", // adjust for density; try 200px for softer texture
+              mixBlendMode: "normal",
+            }}
+          />
+          {/* Diagonal light streaks */}
+          <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+            <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[60%] bg-gradient-to-br from-white/[0.02] to-transparent rotate-[-15deg] blur-2xl" />
           </div>
 
-          {/* Social Icons */}
-          <div className="flex items-center gap-4">
-            <a
-              href="#"
-              className="w-12 h-12 rounded-full border border-gray-700 hover:border-gray-500 flex items-center justify-center transition-all hover:scale-110 hover:bg-gray-800/50"
+          {/* Main Content */}
+          <main className="flex-1 flex flex-col items-center justify-center px-8 pb-20 ">
+            {/* Subtitle with decorative lines */}
+            <div className="subtitle flex items-center gap-4 mb-8">
+              <div className="w-16 h-px bg-[#555555]" />
+              <p className="text-[#BBBBBB] text-xl font-serif italic">
+                Available to work
+              </p>
+              <div className="w-16 h-px bg-[#555555]" />
+            </div>
+
+            {/* Main Title */}
+            <h1 className="main-title text-7xl  mb-6 text-center tracking-tight">
+              Let's{" "}
+              <span className="bg-gradient-to-b from-[#CCCCCC] to-[#888888] bg-clip-text text-transparent">
+                Connect
+              </span>
+            </h1>
+
+            {/* Description */}
+            <p className="description text-[#BBBBBB] text-lg text-center max-w-md mb-12 leading-relaxed font-light">
+              Feel free to contact me if having any questions.
+              <br />
+              I'm available for new projects or just for chatting.
+            </p>
+
+            {/* CTA Button */}
+            <motion.button
+              className="cta-button group relative flex items-center gap-4 px-8 py-4 bg-[#2A2A2A] border border-[#555555] rounded-full shadow-lg hover:bg-[#3A3A3A] hover:border-[#777777] hover:shadow-2xl transition-all duration-300"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
+              <span className="text-white text-lg font-medium">
+                Book a Meeting
+              </span>
+              <div className="w-8 h-8 bg-[#555555] group-hover:bg-[#777777] rounded-full flex items-center justify-center transition-colors duration-300">
+                <motion.svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  animate={{ x: isHovered ? 2 : 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </motion.svg>
+              </div>
+            </motion.button>
+          </main>
+
+          {/* Footer */}
+          <footer className="relative z-10 h-20 flex items-center justify-between px-12 border-t border-white/5">
+            {/* Copyright and Legal */}
+            <div className="flex items-center gap-6 text-[#777777] text-sm font-light">
+              <span>© Aadil, 2025</span>
+              <a
+                href="#"
+                className="hover:text-white transition-colors duration-300"
               >
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-            </a>
-            <a
-              href="#"
-              className="w-12 h-12 rounded-full border border-gray-700 hover:border-gray-500 flex items-center justify-center transition-all hover:scale-110 hover:bg-gray-800/50"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
+                Legal Notice
+              </a>
+              <a
+                href="#"
+                className="hover:text-white transition-colors duration-300"
               >
-                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
-              </svg>
-            </a>
-            <a
-              href="#"
-              className="w-12 h-12 rounded-full border border-gray-700 hover:border-gray-500 flex items-center justify-center transition-all hover:scale-110 hover:bg-gray-800/50"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
+                Privacy Policy
+              </a>
+            </div>
+
+            {/* Social Icons */}
+            <div className="flex items-center gap-4">
+              <motion.a
+                href="#"
+                className="w-10 h-10 border border-[#444444] rounded-full flex items-center justify-center text-[#777777] hover:text-white hover:border-white transition-all duration-300"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-              </svg>
-            </a>
-            <a
-              href="#"
-              className="w-12 h-12 rounded-full border border-gray-700 hover:border-gray-500 flex items-center justify-center transition-all hover:scale-110 hover:bg-gray-800/50"
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
+                <Mail size={18} />
+              </motion.a>
+
+              <motion.a
+                href="#"
+                className="w-10 h-10 border border-[#444444] rounded-full flex items-center justify-center text-[#777777] hover:text-white hover:border-white transition-all duration-300"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" />
-                <line x1="12" y1="2" x2="12" y2="22" />
-                <path d="M17 2v20" />
-                <path d="M7 2v20" />
-              </svg>
-            </a>
-          </div>
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14h-8.027c.13 3.211 3.483 3.312 4.588 2.029h3.168zm-7.686-4h4.965c-.105-1.547-1.136-2.219-2.477-2.219-1.466 0-2.277.768-2.488 2.219zm-9.574 6.988h-6.466v-14.967h6.953c5.476.081 5.58 5.444 2.72 6.906 3.461 1.26 3.577 8.061-3.207 8.061zm-3.466-8.988h3.584c2.508 0 2.906-3-.312-3h-3.272v3zm3.391 3h-3.391v3.016h3.341c3.055 0 2.868-3.016.05-3.016z" />
+                </svg>
+              </motion.a>
+
+              <motion.a
+                href="#"
+                className="w-10 h-10 border border-[#444444] rounded-full flex items-center justify-center text-[#777777] hover:text-white hover:border-white transition-all duration-300"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Linkedin size={18} />
+              </motion.a>
+
+              <motion.a
+                href="#"
+                className="w-10 h-10 border border-[#444444] rounded-full flex items-center justify-center text-[#777777] hover:text-white hover:border-white transition-all duration-300"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Instagram size={18} />
+              </motion.a>
+            </div>
+          </footer>
         </div>
       </div>
     </div>
