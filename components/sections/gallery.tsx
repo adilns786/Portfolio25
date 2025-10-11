@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState ,useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -7,24 +7,15 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function CaseStudiesPortfolio() {
   const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>({});
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
-  const cursorX = useMotionValue(-100);
-  const cursorY = useMotionValue(-100);
-  const springConfig = { damping: 25, stiffness: 150 };
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+  const springConfig = { damping: 40, stiffness: 400 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
-const lastMousePos = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
-// Track global mouse position
-useEffect(() => {
-  const updateMousePos = (e: MouseEvent) => {
-    lastMousePos.current = { x: e.clientX, y: e.clientY };
-  };
-  window.addEventListener("mousemove", updateMousePos);
-  return () => window.removeEventListener("mousemove", updateMousePos);
-}, []);
-
+  // Animate header and cards on load
   useEffect(() => {
     gsap.fromTo(
       ".header-section",
@@ -46,38 +37,18 @@ useEffect(() => {
     );
   }, []);
 
-  // Handle entry direction detection
-  const handleMouseEnter = (e: React.MouseEvent, index: number) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    // Detect entry side (left/right/top/bottom)
-    const fromLeft = x < rect.width / 4;
-    const fromRight = x > (3 * rect.width) / 4;
-    const fromTop = y < rect.height / 4;
-    const fromBottom = y > (3 * rect.height) / 4;
-
-    let startX = x;
-    let startY = y;
-
-    if (fromLeft) startX = -50;
-    else if (fromRight) startX = rect.width + 50;
-    if (fromTop) startY = -50;
-    else if (fromBottom) startY = rect.height + 50;
-
-    cursorX.set(startX);
-    cursorY.set(startY);
-
-    setHoveredCard(index);
+  const handleMouseEnter = (projectId: string) => {
+    setHoveredCard(projectId);
   };
 
-  // Track movement and apply slight offset
-  const handleMouseMove = (e: React.MouseEvent, cardIndex: number) => {
-    const rect = e.currentTarget.getBoundingClientRect();
+  const handleMouseLeave = () => {
+    setHoveredCard(null);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
     const offset = 2 + Math.random() * 6; // random 2–8px offset to right
-    cursorX.set(e.clientX - rect.left + offset);
-    cursorY.set(e.clientY - rect.top);
+    cursorX.set(e.clientX + offset);
+    cursorY.set(e.clientY);
   };
 
   const handleImageError = (projectId: string) => {
@@ -128,41 +99,12 @@ useEffect(() => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#EAEAEA] font-sans overflow-x-hidden">
-      {/* Header */}
-      <div className="relative">
-        {/* Logo */}
-        <div className="absolute top-8 left-12 flex items-center gap-2 bg-white px-4 py-3 rounded-xl shadow-sm z-20">
-          <div className="w-6 h-6 bg-[#333333] rounded flex items-center justify-center">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="white">
-              <path
-                d="M7 2v10M2 7h10"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-              />
-            </svg>
-          </div>
-          <span className="text-[#333333] font-bold text-lg">Denqid</span>
-        </div>
+    <div
+      className="min-h-screen bg-[#EAEAEA] font-sans overflow-x-hidden"
+      onMouseMove={handleMouseMove}
+    >
 
-        {/* Menu Icon */}
-        <button className="absolute top-8 right-12 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-shadow z-20">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#333333"
-            strokeWidth="2"
-          >
-            <line x1="3" y1="12" x2="21" y2="12" />
-            <line x1="3" y1="6" x2="21" y2="6" />
-            <line x1="3" y1="18" x2="21" y2="18" />
-          </svg>
-        </button>
-      </div>
-
+      
       {/* Main Content */}
       <div className="max-w-[1600px] mx-auto px-12 pt-32 pb-20">
         {/* Title Section */}
@@ -177,44 +119,18 @@ useEffect(() => {
 
         {/* Project Cards Grid */}
         <div className="grid lg:grid-cols-2 gap-8 xl:gap-12 relative">
-          {projects.map((project, index) => (
-            <div key={project.id} className="relative">
+          {projects.map((project) => (
+            <div
+              key={project.id}
+              className="relative"
+              onMouseEnter={() => handleMouseEnter(project.id)}
+              onMouseLeave={handleMouseLeave}
+            >
               <motion.div
                 className="project-card bg-white rounded-[20px] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.08)] overflow-hidden relative cursor-pointer"
-                onMouseEnter={(e) => handleMouseEnter(e, index)}
-                onMouseMove={(e) => handleMouseMove(e, index)}
-                onMouseLeave={() => setHoveredCard(null)}
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Hover Circle */}
-                {hoveredCard === index && (
-                  <motion.button
-                    onClick={() => handleCardClick(project.id)}
-                    className="absolute w-16 h-16 rounded-full bg-black flex items-center justify-center shadow-lg z-10"
-                    style={{
-                      left: cursorXSpring,
-                      top: cursorYSpring,
-                      translateX: "-50%",
-                      translateY: "-50%",
-                      pointerEvents: "auto",
-                    }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.9 }}
-                  >
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      stroke="#ffffff"
-                      strokeWidth="2.5"
-                      fill="none"
-                    >
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </motion.button>
-                )}
-
                 {/* Monitor Mockup */}
                 <div className="relative mb-6">
                   <div className="bg-[#333333] rounded-t-[10px] p-3 relative">
@@ -235,6 +151,7 @@ useEffect(() => {
                       )}
                     </div>
                   </div>
+
                   {/* Monitor Stand */}
                   <div className="flex justify-center">
                     <div className="w-24 h-2 bg-[#333333] rounded-b-lg"></div>
@@ -254,9 +171,9 @@ useEffect(() => {
                   {project.name}
                 </h3>
                 <div className="flex gap-2">
-                  {project.tags.map((tag, tagIndex) => (
+                  {project.tags.map((tag, i) => (
                     <span
-                      key={tagIndex}
+                      key={i}
                       className="bg-[#EAEAEA] text-[#808080] text-sm px-3 py-1 rounded-md"
                     >
                       {tag}
@@ -264,6 +181,34 @@ useEffect(() => {
                   ))}
                 </div>
               </div>
+
+              {/* Hover Button (Circle) */}
+              {hoveredCard === project.id && (
+                <motion.button
+                  onClick={() => handleCardClick(project.id)}
+                  className="fixed w-16 h-16 rounded-full bg-black flex items-center justify-center shadow-lg z-50"
+                  style={{
+                    left: cursorXSpring,
+                    top: cursorYSpring,
+                    translateX: "-50%",
+                    translateY: "-50%",
+                    pointerEvents: "auto",
+                  }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    stroke="#ffffff"
+                    strokeWidth="2.5"
+                    fill="none"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </motion.button>
+              )}
             </div>
           ))}
         </div>
