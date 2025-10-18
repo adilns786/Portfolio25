@@ -17,19 +17,28 @@ export default function AnimatedName({ width = 480 }: AnimatedNameProps) {
     if (!svg) return;
 
     // Create gradient for stroke
-    const gradient = document.createElementNS("http://www.w3.org/2000/svg", "linearGradient");
+    const gradient = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "linearGradient"
+    );
     gradient.setAttribute("id", "gradient");
     gradient.setAttribute("x1", "0%");
     gradient.setAttribute("y1", "0%");
     gradient.setAttribute("x2", "100%");
     gradient.setAttribute("y2", "100%");
 
-    const stop1 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    const stop1 = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "stop"
+    );
     stop1.setAttribute("offset", "0%");
     stop1.setAttribute("stop-color", "#4F46E5");
     gradient.appendChild(stop1);
 
-    const stop2 = document.createElementNS("http://www.w3.org/2000/svg", "stop");
+    const stop2 = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "stop"
+    );
     stop2.setAttribute("offset", "100%");
     stop2.setAttribute("stop-color", "#EC4899");
     gradient.appendChild(stop2);
@@ -58,7 +67,14 @@ export default function AnimatedName({ width = 480 }: AnimatedNameProps) {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-fit w-fit p-2 bg-gray-300/10 rounded-3xl">
+    <div
+      className="flex justify-center items-center h-fit w-fit p-1 px-3 
+  rounded-[10px] 
+  bg-white/50 
+  backdrop-blur-[15px] 
+  // shadow-[0_0_0_4px_rgba(255,255,255,0.25)] 
+  opacity-100"
+    >
       <svg
         ref={svgRef}
         width={width}
@@ -66,7 +82,7 @@ export default function AnimatedName({ width = 480 }: AnimatedNameProps) {
         viewBox="0 0 484 199"
         xmlns="http://www.w3.org/2000/svg"
       >
-         <g fill="none" fillOpacity="1.00" stroke="None">
+        <g fill="none" fillOpacity="1.00" stroke="None">
           <path d="M64.00 0.00L57.00 0.00C46.49 12.40 48.09 31.68 42.98 46.98C35.37 79.90 28.04 112.87 20.93 145.93C21.00 159.88 4.29 182.48 20.00 191.00C34.21 187.44 40.77 170.78 51.75 161.75C60.94 151.06 69.84 139.82 80.00 130.00C84.67 149.74 86.76 170.82 94.77 189.23C106.17 197.10 111.73 179.92 106.00 172.00C104.16 151.79 93.26 131.27 95.70 111.70C104.68 105.92 101.23 88.95 89.00 95.00C85.47 78.62 82.06 62.22 77.99 46.01C73.06 30.97 74.76 11.96 64.00 0.00M38.00 153.00C41.89 117.88 53.84 81.75 60.00 46.00C66.47 66.32 70.50 88.64 74.66 109.68C63.31 124.62 48.95 138.01 38.00 153.00Z" />
         </g>
         <g fill="none" fillOpacity="1.00" stroke="None">

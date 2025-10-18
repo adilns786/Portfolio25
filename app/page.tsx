@@ -10,10 +10,12 @@ import ContactSection from "@/components/sections/footer"
 import FAQPage from "@/components/sections/faq"
 import FounderProfilePage from "@/components/sections/timeline"
 import CaseStudiesPortfolio from "@/components/sections/gallery"
+import NavBox from "@/components/sections/navbox"
 
 export default function Page() {
   return (
     <main id="top" className="grain">
+      <NavBox />
       <Hero />
       {/* <About /> */}
       <Skills />
