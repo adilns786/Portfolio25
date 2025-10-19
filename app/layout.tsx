@@ -33,7 +33,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" suppressHydrationWarning className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}>
       <body className="font-sans bg-background text-foreground">
         <Suspense fallback={null}>
-          {/* <Preloader /> */}
+          <Preloader />
           {/* <CustomCursor /> */}
           <SmoothScroll />
           {/* <AmbientGlows /> */}

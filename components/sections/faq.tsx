@@ -4,104 +4,95 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
 
-export default function FAQPage() {
+export default function SkillsSection() {
   const [expandedIndex, setExpandedIndex] = useState(0);
   const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     gsap.fromTo(
-      '.faq-header',
+      '.skills-header',
       { opacity: 0, y: -30 },
       { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
     );
 
     gsap.fromTo(
-      '.faq-left-panel',
+      '.skills-left-panel',
       { opacity: 0, x: -50 },
       { opacity: 1, x: 0, duration: 0.8, delay: 0.2, ease: 'power3.out' }
     );
 
     gsap.fromTo(
-      '.faq-right-panel',
+      '.skills-right-panel',
       { opacity: 0, x: 50 },
       { opacity: 1, x: 0, duration: 0.8, delay: 0.3, ease: 'power3.out' }
     );
   }, []);
 
-  const faqItems = [
+  const skillItems = [
     {
-      question: "Difference between a hour and a branding?",
-      answer: "The Branding is ongoing and flexible — ideal for Startups design needs. Hour Rates are one-time, fixed-scope engagements for quicker goals like a rebrand or landing Page."
+      question: "Frontend Development",
+      answer: "Experienced with React, Next.js, and TypeScript. I focus on building fast, accessible, and responsive interfaces with modern tools like Tailwind CSS and Framer Motion for smooth UI animations."
     },
     {
-      question: "What types of design do you handle?",
-      answer: "We handle a wide range of design services including brand identity, UI/UX design, web design, graphic design, and marketing materials."
+      question: "Backend Development",
+      answer: "Comfortable with Node.js, Express, and Django. I build scalable REST APIs, handle authentication, and integrate with databases like MongoDB and PostgreSQL."
     },
     {
-      question: "How many requests can I make?",
-      answer: "With our subscription model, you can make unlimited design requests. We'll work through them one at a time, ensuring quality and attention to detail."
+      question: "AI & Machine Learning",
+      answer: "Worked on projects involving NLP, LLM-based chatbots, and document intelligence systems. Skilled in Python, Scikit-learn, and OpenAI API integrations."
     },
     {
-      question: "Do you offer development too?",
-      answer: "Yes, we offer both design and development services. Our team can handle full-stack development for web applications and websites."
+      question: "DevOps & Deployment",
+      answer: "Hands-on experience deploying full-stack apps using Render, Vercel, Firebase, and Docker. Familiar with CI/CD and cloud-based workflows."
     }
   ];
 
-  const toggleFAQ = (index: number) => {
+  const toggleSkill = (index: number) => {
     setExpandedIndex(expandedIndex === index ? -1 : index);
   };
 
   return (
     <div className="min-h-screen bg-[#F0F0F0] font-['Inter',sans-serif]">
       {/* Header */}
-      <div className="faq-header relative">
-        {/* Logo */}
-        
-
-        {/* FAQ Label */}
+      <div className="skills-header relative">
         <div className="absolute top-[30px] left-1/2 -translate-x-1/2">
-          <span className="text-[#AAAAAA] text-sm tracking-[2px] font-normal italic">FAQ</span>
+          <span className="text-[#AAAAAA] text-sm tracking-[2px] font-normal italic">
+            SKILLS
+          </span>
         </div>
 
-        
-
-        {/* Main Title */}
-        <h1 className="text-center text-[48px] font-bold text-[#333333] mt-[80px] pt-[30px]">
-          Your Questions, Answered
+        <h1 className="text-center text-[48px] font-bold text-[#333333] pt-[40px]">
+          Technical Expertise
         </h1>
       </div>
 
-      {/* Content Area */}
+      {/* Content */}
       <div className="flex justify-center gap-[80px] mt-[80px] px-8 pb-20 flex-wrap lg:flex-nowrap">
         {/* Left Panel */}
-        <div className="faq-left-panel w-full max-w-[380px] bg-white rounded-[20px] p-10 shadow-[0_10px_30px_rgba(0,0,0,0.05)] h-fit">
-          {/* Profile Picture */}
+        <div className="skills-left-panel w-full max-w-[380px] bg-white rounded-[20px] p-10 shadow-[0_10px_30px_rgba(0,0,0,0.05)] h-fit">
           <div className="mb-5">
             {!imageError ? (
               <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop"
-                alt="Profile"
+                src="/profile.jpeg"
+                alt="Aadil"
                 className="w-[70px] h-[70px] rounded-full object-cover"
                 onError={() => setImageError(true)}
               />
             ) : (
               <div className="w-[70px] h-[70px] rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white text-2xl font-bold">
-                D
+                A
               </div>
             )}
           </div>
 
-          {/* Title */}
           <h3 className="text-2xl font-semibold text-[#333333] mb-2">
-            Have more questions?
+            Want to collaborate?
           </h3>
 
-          {/* Subtitle */}
           <p className="text-lg text-[#666666] mb-10">
-            Book a free discovery call
+            Let’s build something great together.
           </p>
 
-          {/* Book a Meeting Button */}
           <button className="w-full bg-black text-white font-semibold text-base py-[18px] px-[30px] rounded-xl flex items-center justify-center gap-3 hover:bg-[#333333] transition-colors mb-5 group">
             <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="3">
@@ -109,30 +100,29 @@ export default function FAQPage() {
                 <path d="M8 12h8M12 8l4 4-4 4"/>
               </svg>
             </div>
-            <span>Book a Meeting</span>
+            <span>Contact Me</span>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-x-1 transition-transform">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
           </button>
 
-          {/* Email Text */}
           <p className="text-sm text-[#666666] text-center">
-            Or, email me at{' '}
+            Or email me at{' '}
             <a 
-              href="mailto:hello@denqid.com" 
+              href="mailto:adil.shah@example.com" 
               className="text-black font-semibold underline hover:text-[#666666] transition-colors"
             >
-              hello@denqid.com
+              adil.shah@example.com
             </a>
           </p>
         </div>
 
-        {/* Right Panel - FAQ Items */}
-        <div className="faq-right-panel w-full max-w-[600px]">
-          {faqItems.map((item, index) => (
+        {/* Right Panel */}
+        <div className="skills-right-panel w-full max-w-[600px]">
+          {skillItems.map((item, index) => (
             <div key={index} className="border-b border-[#DDDDDD] mb-[30px] pb-[30px] last:border-b-0">
               <button
-                onClick={() => toggleFAQ(index)}
+                onClick={() => toggleSkill(index)}
                 className="w-full flex items-start justify-between text-left group"
               >
                 <h3 className="text-xl font-semibold text-[#333333] pr-8 group-hover:text-[#666666] transition-colors">

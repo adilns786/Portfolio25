@@ -22,13 +22,13 @@ const Hero = () => {
       });
     });
 
-    // Custom cursor follow effect
+    // Custom cursor follow effect with proper positioning
     const handleMouseMove = (e) => {
       if (cursorRef.current) {
         gsap.to(cursorRef.current, {
-          x: e.clientX,
-          y: e.clientY,
-          duration: 0.5,
+          left: e.clientX,
+          top: e.clientY,
+          duration: 0.8,
           ease: "power2.out",
         });
       }
@@ -59,10 +59,15 @@ const Hero = () => {
           ))}
         </div>
 
-        {/* Custom cursor follower */}
+        {/* Custom cursor follower - Fixed positioning */}
         <div
           ref={cursorRef}
-          className="hidden lg:block fixed w-4 h-4 bg-black/20 rounded-full pointer-events-none z-50 -translate-x-1/2 -translate-y-1/2"
+          className="hidden lg:block fixed w-4 h-4 bg-black/20 rounded-full pointer-events-none z-50"
+          style={{
+            transform: "translate(-50%, -50%)",
+            left: 0,
+            top: 0,
+          }}
         />
 
         {/* Available to work badge */}
@@ -207,7 +212,7 @@ const Hero = () => {
 
           {/* Scroll Indicator */}
           <motion.div
-            className="absolute -bottom-2 -right-60 flex flex-col items-center gap-2"
+            className="absolute -bottom- -right-60 flex flex-col items-center gap-2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}

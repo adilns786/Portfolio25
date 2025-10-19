@@ -18,7 +18,7 @@ export default function Page() {
       <NavBox />
       <Hero />
       {/* <About /> */}
-      <Skills />
+      {/* <Skills /> */}
       <Projects />
       <FounderProfilePage/>
       <Hello />
