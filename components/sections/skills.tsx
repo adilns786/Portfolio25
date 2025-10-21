@@ -31,20 +31,24 @@ export default function Skills() {
   const skillItems = [
     {
       question: "Frontend Development",
-      answer: "Experienced with React, Next.js, and TypeScript. I focus on building fast, accessible, and responsive interfaces with modern tools like Tailwind CSS and Framer Motion for smooth UI animations."
+      answer:
+        "Experienced with React, Next.js, and TypeScript. I focus on building fast, accessible, and responsive interfaces with modern tools like Tailwind CSS and Framer Motion for smooth UI animations.",
     },
     {
       question: "Backend Development",
-      answer: "Comfortable with Node.js, Express, and Django. I build scalable REST APIs, handle authentication, and integrate with databases like MongoDB and PostgreSQL."
+      answer:
+        "Comfortable with Node.js, Express, and Django. I build scalable REST APIs, handle authentication, and integrate with databases like MongoDB and PostgreSQL.",
     },
     {
       question: "AI & Machine Learning",
-      answer: "Worked on projects involving NLP, LLM-based chatbots, and document intelligence systems. Skilled in Python, Scikit-learn, and OpenAI API integrations."
+      answer:
+        "Worked on projects involving NLP, LLM-based chatbots, and document intelligence systems. Skilled in Python, Scikit-learn, and OpenAI API integrations.",
     },
     {
       question: "DevOps & Deployment",
-      answer: "Hands-on experience deploying full-stack apps using Render, Vercel, Firebase, and Docker. Familiar with CI/CD and cloud-based workflows."
-    }
+      answer:
+        "Hands-on experience deploying full-stack apps using Render, Vercel, Firebase, and Docker. Familiar with CI/CD and cloud-based workflows.",
+    },
   ];
 
   const toggleSkill = (index: number) => {
@@ -52,61 +56,72 @@ export default function Skills() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F0F0F0] font-['Inter',sans-serif]">
+    <div className="min-h-screen bg-[#F0F0F0] font-['Inter',sans-serif] px-4 sm:px-6 md:px-30">
       {/* Header */}
-      <div className="skills-header relative">
-        <div className="absolute top-[30px] left-1/2 -translate-x-1/2">
-          <span className="text-[#AAAAAA] text-sm tracking-[2px] font-normal italic">
-            SKILLS
-          </span>
-        </div>
-
-        <h1 className="text-center text-[48px] font-bold text-[#333333] pt-[40px]">
+      <div className="skills-header text-center pt-16 md:pt-20 mb-10 md:mb-16">
+        <p className="text-[#AAAAAA] text-sm tracking-[2px] italic mb-2">
+          SKILLS
+        </p>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#333333]">
           Technical Expertise
         </h1>
       </div>
 
       {/* Content */}
-      <div className="flex justify-center gap-[80px] mt-[80px] px-8 pb-20 flex-wrap lg:flex-nowrap">
+      <div className="flex flex-col lg:flex-row items-start justify-center gap-10 md:gap-16 lg:gap-20 pb-20 max-w-6xl mx-auto">
         {/* Left Panel */}
-        <div className="skills-left-panel w-full max-w-[380px] bg-white rounded-[20px] p-10 shadow-[0_10px_30px_rgba(0,0,0,0.05)] h-fit">
-          <div className="mb-5">
+        <div className="skills-left-panel w-full lg:w-1/3 bg-white rounded-[20px] p-8 sm:p-10 shadow-[0_10px_30px_rgba(0,0,0,0.05)] flex-shrink-0">
+          <div className="mb-5 flex flex-col items-center lg:items-start">
             {!imageError ? (
               <img
                 src="/profile.jpeg"
                 alt="Aadil"
-                className="w-[70px] h-[70px] rounded-full object-cover"
+                className="w-[70px] h-[70px] rounded-full object-cover mb-4"
                 onError={() => setImageError(true)}
               />
             ) : (
-              <div className="w-[70px] h-[70px] rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white text-2xl font-bold">
+              <div className="w-[70px] h-[70px] rounded-full bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center text-white text-2xl font-bold mb-4">
                 A
               </div>
             )}
+            <h3 className="text-2xl font-semibold text-[#333333] mb-2 text-center lg:text-left">
+              Want to collaborate?
+            </h3>
+            <p className="text-base text-[#666666] mb-6 text-center lg:text-left">
+              Let’s build something great together.
+            </p>
           </div>
 
-          <h3 className="text-2xl font-semibold text-[#333333] mb-2">
-            Want to collaborate?
-          </h3>
-
-          <p className="text-lg text-[#666666] mb-10">
-            Let’s build something great together.
-          </p>
-
-          <button className="w-full bg-black text-white font-semibold text-base py-[18px] px-[30px] rounded-xl flex items-center justify-center gap-3 hover:bg-[#333333] transition-colors mb-5 group">
+          <button className="w-full bg-black text-white font-semibold text-base py-[14px] px-[24px] rounded-xl flex items-center justify-center gap-3 hover:bg-[#333333] transition-colors mb-4 group">
             <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="black" strokeWidth="3">
-                <circle cx="12" cy="12" r="10"/>
-                <path d="M8 12h8M12 8l4 4-4 4"/>
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="black"
+                strokeWidth="3"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <path d="M8 12h8M12 8l4 4-4 4" />
               </svg>
             </div>
             <span>Contact Me</span>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="group-hover:translate-x-1 transition-transform">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              className="group-hover:translate-x-1 transition-transform"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
+            
           </button>
-
-          <p className="text-sm text-[#666666] text-center">
+          
+          {/* <p className="text-sm text-[#666666] text-center">
             Or email me at{' '}
             <a 
               href="mailto:adil.shah@example.com" 
@@ -114,18 +129,21 @@ export default function Skills() {
             >
               adil.shah@example.com
             </a>
-          </p>
+          </p> */}
         </div>
 
         {/* Right Panel */}
-        <div className="skills-right-panel w-full max-w-[600px]">
+        <div className="skills-right-panel w-full lg:w-2/3">
           {skillItems.map((item, index) => (
-            <div key={index} className="border-b border-[#DDDDDD] mb-[30px] pb-[30px] last:border-b-0">
+            <div
+              key={index}
+              className="border-b border-[#DDDDDD] mb-6 md:mb-8 pb-6 md:pb-8 last:border-b-0"
+            >
               <button
                 onClick={() => toggleSkill(index)}
                 className="w-full flex items-start justify-between text-left group"
               >
-                <h3 className="text-xl font-semibold text-[#333333] pr-8 group-hover:text-[#666666] transition-colors">
+                <h3 className="text-lg sm:text-xl font-semibold text-[#333333] pr-6 group-hover:text-[#666666] transition-colors">
                   {item.question}
                 </h3>
                 <motion.div
@@ -133,16 +151,16 @@ export default function Skills() {
                   transition={{ duration: 0.3 }}
                   className="flex-shrink-0"
                 >
-                  <svg 
-                    width="20" 
-                    height="20" 
-                    viewBox="0 0 24 24" 
-                    fill="none" 
-                    stroke="#FF6666" 
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#FF6666"
                     strokeWidth="2.5"
                   >
-                    <line x1="12" y1="5" x2="12" y2="19"/>
-                    <line x1="5" y1="12" x2="19" y2="12"/>
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
                   </svg>
                 </motion.div>
               </button>
@@ -156,7 +174,7 @@ export default function Skills() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <p className="text-base text-[#666666] leading-[1.6] mt-4">
+                    <p className="text-sm sm:text-base text-[#666666] leading-relaxed mt-3 sm:mt-4">
                       {item.answer}
                     </p>
                   </motion.div>

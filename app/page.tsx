@@ -8,14 +8,14 @@ import Footer from "@/components/sections/Footer";
 import InfiniteProjects from "@/components/sections/InfiniteProjects";
 import GalleryProjects from "@/components/sections/GalleryProjects";
 import AboutUs from "@/components/sections/AboutUs";
-import Skills from "@/components/sections/skills";
 import NavBox from "@/components/sections/navbox";
 import CircularGallery from "@/components/sections/CircularGallery";
 import Achievements  from "@/components/sections/Achievements";
+import Skills from "@/components/sections/Skills";
 
 export default function Page() {
   return (
-    <main id="top" className="grain">
+    <main id="top" className="grain bg-[#eaeaea]/10">
       <NavBox />
       <div className="fixed right-20 top-20 w-16 h-16 bg-yellow-400 border-2 border-yellow-600 rounded-full flex items-center justify-center transform rotate-12 shadow-lg z-50">
         <div className="text-center leading-tight">
@@ -34,7 +34,7 @@ export default function Page() {
       {/* <Hello /> */}
       <Achievements/>
       <GalleryProjects />
-      <Skills />
+      <Skills/>
       {/* <Experience /> */}
       {/* <Certificates /> */}
       {/* <Contact /> */}

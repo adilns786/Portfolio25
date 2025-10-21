@@ -14,7 +14,7 @@ const skills = [
   { name: "Node.js", icon: SiNodedotjs, level: "Advanced" },
 ]
 
-export default function Skills() {
+function OLD() {
   return (
     <section id="skills" className="mx-auto max-w-6xl px-4 py-24 md:px-8">
       <motion.p

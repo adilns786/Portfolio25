@@ -64,14 +64,7 @@ const InfiniteProjects = () => {
 
   // Generate dynamic background colors
   const getBackgroundColor = (index) => {
-    const colors = [
-      "bg-white",
-      "bg-white",
-      "bg-white",
-      "bg-white",
-      "bg-white",
-      
-    ];
+    const colors = ["bg-white", "bg-white", "bg-white", "bg-white", "bg-white"];
     return colors[index % colors.length];
   };
 
@@ -80,13 +73,15 @@ const InfiniteProjects = () => {
   const rightProjects = projects.filter((_, i) => i % 2 !== 0);
 
   const ProjectCard = ({ project, index }) => (
-    <div className="relative mb-6">
+    <div className="relative mb-6 w-full">
       <div
-        className={`${getBackgroundColor(index)} text-black rounded-xl p-6  h-[350px] overflow-hidden relative`}
+        className={`${getBackgroundColor(
+          index
+        )} text-black rounded-xl p-4 sm:p-6 md:p-8 h-[250px] sm:h-[320px] md:h-[380px] overflow-hidden relative`}
       >
+        {/* Background Image */}
         {project.thumbnail && (
           <>
-            {/* <div className="absolute inset-0 bg-black opacity-30"></div> */}
             <img
               src={project.thumbnail}
               alt={project.title}
@@ -94,47 +89,36 @@ const InfiniteProjects = () => {
             />
           </>
         )}
-        <div className="relative z-10 p-4 h-full flex flex-col">
-          {/* Top Window Control Circles */}
-          <div className="flex items-center gap-2 mb-8">
+
+        {/* Foreground Content */}
+        <div className="relative z-10 h-full flex flex-col justify-between p-2 sm:p-4 md:p-6">
+          {/* Window Control Circles */}
+          <div className="flex items-center gap-2 mb-4 sm:mb-6">
             <div className="flex gap-1">
-              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-red-500 rounded-full"></div>
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-yellow-500 rounded-full"></div>
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-green-500 rounded-full"></div>
             </div>
           </div>
 
-          {/* Content */}
+          {/* Main Content */}
           <div className="flex-1 flex flex-col">
-            {/* {project.status && (
-              <div className="flex items-center gap-2 mb-3">
-                <span className="text-xs font-bold px-3 py-1 bg-white/20 rounded-full backdrop-blur-sm">
-                  {project.status}
-                </span>
-                <span className="text-xs font-bold px-3 py-1 bg-white/20 rounded-full backdrop-blur-sm">
-                  {project.role}
-                </span>
-              </div>
-            )} */}
-            <h3 className="text-2xl font-bold leading-tight mb-3">
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight mb-2 sm:mb-3">
               {project.title}
             </h3>
+
             {project.duration && (
-              <p className="text-xs tracking-wide uppercase mb-3 opacity-90">
+              <p className="text-[10px] sm:text-xs tracking-wide uppercase mb-2 sm:mb-3 opacity-90">
                 {project.duration}
               </p>
             )}
-            {/* {project.shortDescription && (
-              <p className="text-sm mb-4 opacity-90 line-clamp-3 flex-1">
-                {project.shortDescription}
-              </p>
-            )} */}
+
             {project.tags && project.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-1 sm:gap-2">
                 {project.tags.slice(0, 3).map((tag, i) => (
                   <span
                     key={i}
-                    className="text-xs px-2 py-1 bg-white/10 rounded-full"
+                    className="text-[10px] sm:text-xs px-2 py-0.5 bg-white/10 rounded-full backdrop-blur-sm"
                   >
                     {tag}
                   </span>
@@ -144,11 +128,11 @@ const InfiniteProjects = () => {
           </div>
 
           {/* Footer */}
-          <div className="mt-4 text-xs italic opacity-70">
-            {project.techStack && project.techStack.length > 0 && (
+          {project.techStack && project.techStack.length > 0 && (
+            <div className="mt-3 sm:mt-4 text-[10px] sm:text-xs italic opacity-70">
               <span>{project.techStack[0]}</span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -166,7 +150,7 @@ const InfiniteProjects = () => {
           {/* Inner Content Area with Overflow Hidden */}
           <div
             ref={containerRef}
-            className="bg-neutral-800 rounded-[1.8rem] px-8 overflow-hidden h-full relative"
+            className="bg-neutral-800 rounded-[1.8rem] px-3 md:px-8 overflow-hidden h-full relative"
           >
             {/* Light Colored Overlay with Top and Bottom Vignette */}
             <div className="absolute inset-0 z-20 pointer-events-none rounded-[2rem]">
@@ -179,7 +163,7 @@ const InfiniteProjects = () => {
             </div>
 
             {/* Two Column Layout */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 h-full">
+            <div className="grid grid-cols-1 lg:grid-cols-2 md:gap-6 h-full">
               {/* Left Column - Slower - Duplicated for infinite scroll */}
               <div className="overflow-hidden">
                 <div ref={leftColumnRef}>
