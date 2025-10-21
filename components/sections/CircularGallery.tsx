@@ -654,6 +654,7 @@ interface CircularGalleryProps {
   font?: string;
   scrollSpeed?: number;
   scrollEase?: number;
+  styles?: string;
 }
 
 export default function CircularGallery({
@@ -663,7 +664,8 @@ export default function CircularGallery({
   borderRadius = 0.05,
   font = 'bold 30px Figtree',
   scrollSpeed = 2,
-  scrollEase = 0.05
+  scrollEase = 0.05,
+  styles=""
 }: CircularGalleryProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -681,7 +683,7 @@ export default function CircularGallery({
       app.destroy();
     };
   }, [items, bend, textColor, borderRadius, font, scrollSpeed, scrollEase]);
-  return <div className="w-full h-full overflow-hidden cursor-grab active:cursor-grabbing bg-[#EAEAEA]" ref={containerRef} />;
+  return <div className={`w-full h-full overflow-hidden cursor-grab active:cursor-grabbing ${styles}`} ref={containerRef} />;
 }
 
 
