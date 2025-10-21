@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import { Mail, Linkedin, Instagram } from "lucide-react";
 
-export default function ContactPage() {
+export default function Footer() {
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {

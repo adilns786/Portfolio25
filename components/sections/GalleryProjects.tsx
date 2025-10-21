@@ -3,10 +3,17 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRouter } from "next/navigation";
+import projects from "@/lib/projects";
+
 gsap.registerPlugin(ScrollTrigger);
 
-export default function CaseStudiesPortfolio() {
-  const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>({});
+export default function GalleryProjects() {
+  const router = useRouter();
+
+  const [imageErrors, setImageErrors] = useState<{ [key: string]: boolean }>(
+    {}
+  );
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   const cursorX = useMotionValue(0);
@@ -56,55 +63,34 @@ export default function CaseStudiesPortfolio() {
   };
 
   const handleCardClick = (id: string) => {
+    router.push(`/projects`);
     console.log("Clicked project:", id);
   };
 
-  const projects = [
-    {
-      id: "puls",
-      name: "Puls",
-      tags: ["Wellness", "Fitness"],
-      screenshot:
-        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=800&fit=crop",
-      bgColor: "bg-white",
-      fallbackColor: "from-red-900 to-red-700",
-    },
-    {
-      id: "eyecatcher",
-      name: "EyeCatcher",
-      tags: ["Beauty", "Hairs"],
-      screenshot:
-        "https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&h=800&fit=crop",
-      bgColor: "bg-gray-900",
-      fallbackColor: "from-gray-800 to-gray-950",
-    },
-    {
-      id: "project3",
-      name: "Project Three",
-      tags: ["Design", "Branding"],
-      screenshot:
-        "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&h=800&fit=crop",
-      bgColor: "bg-blue-50",
-      fallbackColor: "from-blue-900 to-blue-700",
-    },
-    {
-      id: "project4",
-      name: "Project Four",
-      tags: ["Tech", "Innovation"],
-      screenshot:
-        "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&h=800&fit=crop",
-      bgColor: "bg-purple-50",
-      fallbackColor: "from-purple-900 to-purple-700",
-    },
-  ];
-
+  // Generate dynamic background colors
+  const getFallbackColor = (index) => {
+    const colors = [
+      "from-red-100 to-red-200",
+      "from-gray-100 to-gray-250",
+      "from-blue-100 to-blue-200",
+      "from-purple-100 to-purple-200",
+    ];
+    return colors[index % colors.length];
+  };
+  const getBgColor = (index) => {
+    const colors = [
+      "bg-white",
+      "bg-grey-50",
+      "bg-blue-50",
+      "bg-purple-50",
+    ];
+    return colors[index % colors.length];
+  };
   return (
     <div
       className="min-h-screen bg-[#EAEAEA] font-sans overflow-x-hidden"
       onMouseMove={handleMouseMove}
     >
-
-      
       {/* Main Content */}
       <div className="max-w-[1600px] mx-auto px-12 pt-32 pb-20">
         {/* Title Section */}
@@ -119,7 +105,7 @@ export default function CaseStudiesPortfolio() {
 
         {/* Project Cards Grid */}
         <div className="grid lg:grid-cols-2 gap-8 xl:gap-12 relative">
-          {projects.map((project) => (
+          {projects.map((project,index) => (
             <div
               key={project.id}
               className="relative"
@@ -137,16 +123,16 @@ export default function CaseStudiesPortfolio() {
                     <div className="bg-gray-800 rounded-[5px] overflow-hidden aspect-[16/10]">
                       {!imageErrors[project.id] ? (
                         <img
-                          src={project.screenshot}
-                          alt={project.name}
+                          src={project?.detailsPage?.heroImage}
+                          alt={project.title}
                           className="w-full h-full object-cover"
                           onError={() => handleImageError(project.id)}
                         />
                       ) : (
                         <div
-                          className={`w-full h-full bg-gradient-to-br ${project.fallbackColor} flex items-center justify-center text-white text-4xl font-bold`}
+                          className={`w-full h-full bg-gradient-to-br ${getFallbackColor(index)} flex items-center justify-center text-white text-4xl font-bold`}
                         >
-                          {project.name[0]}
+                          {project.title}
                         </div>
                       )}
                     </div>
@@ -168,7 +154,7 @@ export default function CaseStudiesPortfolio() {
               {/* Card Footer */}
               <div className="flex items-center justify-between mt-4">
                 <h3 className="text-[#333333] font-bold text-2xl">
-                  {project.name}
+                  {project.title}
                 </h3>
                 <div className="flex gap-2">
                   {project.tags.map((tag, i) => (

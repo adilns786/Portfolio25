@@ -8,7 +8,7 @@ import Image from "next/image";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function FounderProfilePage() {
+export default function AboutUs() {
   const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
